@@ -1,0 +1,19 @@
+{% extends "gramatyk/base.html" %}
+
+{% block content_block %}
+    <h1>{{ solution.name }}</h1>
+    <textarea rows="20" cols="50" spellcheck="false">{{ solution.grammar }}</textarea>
+<p>
+
+<strong id="like_count">{{ solution.likes }}</strong> people like this category
+
+{% if user.is_authenticated %}
+        <button id="likes" data-solid="{{solution.id}}" class="btn btn-primary" type="button">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        Like
+        </button>
+{% endif %}
+
+</p>
+{% endblock %}
+

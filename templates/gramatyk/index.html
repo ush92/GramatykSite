@@ -1,0 +1,54 @@
+{% extends "gramatyk/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Gramatyk->{% endblock %}
+
+
+{% block side_block_left %}
+    <div style="background-color: #7b3e3a">
+    <button id="analyze-btn" disabled>Analiza gramatyki</button>
+    <button id="chomsky-btn" disabled>Postać normalna Chomsky'ego</button>
+    <button id="greibach-btn" disabled>Postać normalna Greibach</button>
+    <button id="regular-btn" disabled>Generuj graf gramatyki regularnej</button>
+    {% if user.is_authenticated %}
+        <button id="save-btn" disabled onclick="Apprise('Podaj nazwę solucji:','Solucja publiczna?', {input:true});">Zapisz solucję</button>
+    {% endif %}
+
+    <textarea id="solution-area" spellcheck="false" style="padding: 8px 8px 15px 8px ;border:0px;background-color:rgba(27, 56, 75, 0);overflow:auto;resize:none"
+              placeholder="// wpisz gramatykę"></textarea>
+    </div>
+{% endblock %}
+
+{% block side_block_right %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Solucje publiczne</h3>
+        </div>
+        {% if latest_solution_list %}
+            <ul class="list-group">
+                {% for solution in latest_solution_list %}
+                    {% if solution.is_public %}
+                        <li class="list-group-item"><a href="solution/{{ solution.id }}/">{{ solution.name|truncatechars:13 }}  {{ solution.pub_date|date:"d.m.y" }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak solucji.</p>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block content_block %}
+<p class="formfield">
+    <textarea id="analyze-area" readonly spellcheck="false" style="max-height: 100%;padding: 8px 8px 15px 8px;border:0px;background-color:rgba(20, 50, 70,1);overflow:auto;resize:none">
+// Przykładowa gramatyka:
+S->AB|AC.
+B->BB|zx.
+A->xC|y.
+C->zB|CC.
+Q->Qt|BB|CAB.</textarea>
+</p>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "gramatyk/base.html" %}
+
+{% block content_block %}
+<h1>Zaloguj</h1>
+        <form method="post" action=".">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input type="submit" value="Zaloguj" />
+                <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+
+        <p>Nie masz jeszcze konta? <a href="{% url 'registration_register' %}">Zarejestruj się</a>!</p>
+{% endblock %}
